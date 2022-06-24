@@ -7,6 +7,7 @@
 		
 //classname
 #define CN_GAMEMASTER		"mcpgm"
+#define CN_ADMINCHANGECHECKER 	"acc"
 #define CN_PLAYER		"player"
 #define CN_BUBBLE		"bubble"
 #define CN_CPRINTER		"cprinter"
@@ -68,6 +69,7 @@
 #define CN_FIENDLEAPTRACKER	"fiendleaptracker"
 #define CN_CONTROLPOINTTRACKER	"mcpcptracker"
 #define CN_CONTROLPOINTMARKER 	"mcpcpmarker"
+#define CN_PROGRESSBAR		"mcpprogbar"
 #define CN_CP1			"info_mcp_cp1"
 #define CN_CP2			"info_mcp_cp2"
 #define CN_CP3			"info_mcp_cp3"
@@ -87,20 +89,23 @@
 #define IK_FLIPSLOTS		"flipslots"		//reverse slot order on keyboard 
 #define IK_NOHITNUMBERS		"nohitnumbers"		//no damage numbers spawned above players head 
 #define IK_SB			"sb"			//statusbar? spacebetween? whitespace newlines from top to sbar 
-#define IK_EC			"ec"			//exec class configs
-#define IK_ET			"et"			//exec team configs
-#define IK_AI			"ai"			//autoid
+#define IK_EXECCLASSCFG		"ec"			//exec class configs
+#define IK_EXECTEAMCFG		"et"			//exec team configs
+#define IK_AUTOID		"ai"			//autoid
 #define IK_AUTOEXEC		"autoexec"		//autoexec mcpuffin.cfg	
 #define IK_MINFLASH		"minflash"      	//min flashgren flash effect client - does not alter what is seen or duration
 #define IK_MAXFLASH		"maxflash"		//max flashgren flash effect client - does not alter what is seen or duration
 #define IK_VISGRENTIMER		"vgt"			//"" or 1 displays all, 2 slider only
 #define IK_GRENTIMER		"grentimer"		//if 0 no sound played on grenprime, otherwise number set determines the grentimer sound
 #define IK_GRENTIMERDELAY	"grentimerdelay"	//ent is spawned to play grentimer sound, nextthink + this 
+#define IK_SCORETICKSOUND	"scoreticksound"	//play scoretick sound in sac/5cp
+#define IK_SCORETICKTEXT	"scoreticktext"		//bprint2 scoretick text 
 
 //world
-#define IK_MCPMODE		"mcpmode"		//world setting, used for detecting mode on map change
-#define IK_FORCESTART		"forcestart"		//world setting, readys up all players if not 0
-
+#define IK_ADMINCHANGEMODE		"acm"			//world setting, used for detecting mode on map change
+#define IK_ADMINFORCESTART		"afs"			//world setting, readys up all players if not 0
+#define IK_ADMINFORCEVOTE 		"afv"			//world setting, force vote
+#define IK_ADMINCHANGEVICTORYTOTAL 	"victorytotal"		//world settings, changes 
 
 //deathtypes
 #define MCPDEATH_AXE			1
@@ -236,16 +241,18 @@
 #define MCPMODE_COINSFFA		6
 
 //mode stuff
-#define COINS_WINTOTAL		50
-#define COINS_DURATION		20
-#define COINS_GRACEPERIOD	0.5
-#define SACRIFICE_POINTINTERVAL	2	
-#define MCPFLAG_RESETTIME	15
-#define MCPFLAG_TOSSSPEED	600
+#define COINS_DURATION			20
+#define COINS_GRACEPERIOD		0.5
+#define SACRIFICE_POINTINTERVAL		2	
+#define MCPFLAG_RESETTIME		15
+#define MCPFLAG_TOSSSPEED		600
 
-#define SACRIFICE_WINTOTAL	100
-#define FIEND_WINTOTAL		25
-#define BABY_WINTOTAL		25
+#define VICTORYTOTAL_COINSTEAM		50
+#define VICTORYTOTAL_COINSFFA		25
+#define VICTORYTOTAL_SACRIFICE		100
+#define VICTORYTOTAL_5CP		5
+#define VICTORYTOTAL_FIEND		25
+#define VICTORYTOTAL_BABYFIEND		25
 
 #define MCPCP_TICKRATE			1
 #define MCPCP_PROGRESSNEEDED_MAIN	50
@@ -346,14 +353,14 @@
 #define MELEEDAMAGE_BABYFIEND		5
 
 //STICKY
-#define STICKYDAMAGE_DIRECT		120	
-#define STICKYDAMAGE_SURFACEDET		120
-#define STICKYDAMAGE_AIRDET		60
+#define STICKYDAMAGE_DIRECT		150	
+#define STICKYDAMAGE_SURFACEDET		150
+#define STICKYDAMAGE_AIRDET		100
 
 //SHAFT
 #define SHAFT_DAMAGE			8
-#define SHAFT_HEAL			5
-#define SHAFT_SELFHEAL			5
+#define SHAFT_HEAL			8
+#define SHAFT_SELFHEAL			8
 #define SHAFT_OVERHEAL			50
 
 #define MGUNNERTOUCH_MAXDAMAGE  	400
@@ -428,7 +435,7 @@
 #define CAPACITOR_INFECTIONDURATION	6
 #define MCPFLASHGREN_DURATION		3
 #define MCPFRAG_DAMAGE			180
-#define CLUSTERBIG_DAMAGE		50
+#define CLUSTERBIG_DAMAGE		80
 #define CLUSTERSMALL_DAMAGE		100
 #define HANDHELDGRENEXPLODEDELAY	0.1		
 

@@ -18,7 +18,7 @@ string mcp_GetSBString(entity e) =
 		sb1count = sb1count - 1;
 	}
 	return res;
-}
+};
 
 string mcp_GetIdentityString(entity e) = 
 {
@@ -28,7 +28,7 @@ string mcp_GetIdentityString(entity e) =
 		return res;
 		
 	local string ai;
-	ai = infokey(e, IK_AI);
+	ai = infokey(e, IK_AUTOID);
 	
 	if(ai == "0")
 		return res;
@@ -138,11 +138,11 @@ string mcp_GetGoalString(entity e) =
 		
 		//local float bdefcp = CONTROLPOINT[bluedefcp].redprogress/CONTROLPOINT[bluedefcp].progressneeded;
 		//bdefcp = rint(bdefcp * 100);
-		local float bdefcp = CONTROLPOINT[bluedefcp].blueprogress;
+		local float bdefcp = CONTROLPOINT[bluedefcp].redprogress;
 		
 		//local float rdefcp = CONTROLPOINT[reddefcp].blueprogress/CONTROLPOINT[reddefcp].progressneeded;
 		//rdefcp = rint(rdefcp * 100);
-		local float rdefcp = CONTROLPOINT[reddefcp].redprogress;
+		local float rdefcp = CONTROLPOINT[reddefcp].blueprogress;
 		
 		local string div = " / ";
 		
@@ -245,8 +245,8 @@ string mcp_GetGoalString(entity e) =
 	}
 	if(matchstate == MATCHSTATE_LIVE && mcpmode == MCPMODE_FIEND)
 	{
-		local string p1 = strcat("humans : ", strpad(-2,ftos(bluescore)),"/",strpad(2,ftos(FIEND_WINTOTAL)));
-		local string p2 = strcat("fiends : ", strpad(-2,ftos(redscore)),"/",strpad(2,ftos(FIEND_WINTOTAL)));
+		local string p1 = strcat("humans : ", strpad(-2,ftos(bluescore)),"/",strpad(2,ftos(victorytotal)));
+		local string p2 = strcat("fiends : ", strpad(-2,ftos(redscore)),"/",strpad(2,ftos(victorytotal)));
 		if(e.team_no == MCPTEAM_BLUE)
 		{
 			line1 = "kill the \sfiends!\s\n";
@@ -260,8 +260,8 @@ string mcp_GetGoalString(entity e) =
 	}
 	if(matchstate == MATCHSTATE_LIVE && mcpmode == MCPMODE_BABYFIEND)
 	{
-		local string p3 = strcat("hunter : ", strpad(-2,ftos(bluescore)),"/",strpad(2,ftos(BABY_WINTOTAL)));
-		local string p4 = strcat("fiends : ", strpad(-2,ftos(redscore)),"/",strpad(2,ftos(BABY_WINTOTAL)));
+		local string p3 = strcat("hunter : ", strpad(-2,ftos(bluescore)),"/",strpad(2,ftos(victorytotal)));
+		local string p4 = strcat("fiends : ", strpad(-2,ftos(redscore)),"/",strpad(2,ftos(victorytotal)));
 		if(e.team_no == MCPTEAM_BLUE)
 		{
 			line1 = "kill the \sbaby fiends!\s\n";
@@ -275,8 +275,8 @@ string mcp_GetGoalString(entity e) =
 	}
 	if(matchstate == MATCHSTATE_LIVE && mcpmode == MCPMODE_COINSTEAM)
 	{
-		local string p5 = strcat("blue : ", strpad(-2,ftos(bluescore)),"/",strpad(2,ftos(COINS_WINTOTAL)), " coins");
-		local string p6 = strcat("red : ", strpad(-2,ftos(redscore)),"/",strpad(2,ftos(COINS_WINTOTAL)), " coins");
+		local string p5 = strcat("blue : ", strpad(-2,ftos(bluescore)),"/",strpad(2,ftos(victorytotal)), " coins");
+		local string p6 = strcat("red : ", strpad(-2,ftos(redscore)),"/",strpad(2,ftos(victorytotal)), " coins");
 
 		line1 = "kill the enemy and collect their coins!\n";
 		line3 = strcat(p5, "          ",p6,"\n");
@@ -284,8 +284,24 @@ string mcp_GetGoalString(entity e) =
 	}
 	if(matchstate == MATCHSTATE_LIVE && mcpmode == MCPMODE_COINSFFA)
 	{
-		line1 = "something should go here\n";
-		line3 = "here too\n";
+		if(mcpgoal.classname == CN_PLAYER)
+		{
+			if(mcpgoal == e)
+			{
+				line1 = "you are in the lead!\n";
+				line3 = "\n";
+			}
+			else
+			{
+				line1 = strcat(mcpgoal.netname, " is in the lead!\n");
+				line3 = strcat("( ", ftos(mcpgoal.frags), " / ", ftos(victorytotal)," ) coins\n") ;
+			}
+		}
+		else
+		{
+		line1 = "noone has the lead yet\n";
+		line3 = "kill someone for a coin\n";
+		}
 	}
 
 	return res = strcat(line1, line2, line3, line4);
@@ -620,7 +636,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 		if(linenum == 9)
 			return "generate points for the owners team.";
 		if(linenum == 11)
-			return strcat("first team to reach ",ftos(SACRIFICE_WINTOTAL)," wins.");
+			return strcat("first team to reach ",ftos(victorytotal)," wins.");
 		if(linenum == 12)
 			return " ";
 		if(linenum == 13)
@@ -680,7 +696,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 		if(linenum == 9)
 			return "first team to reach a combined total";
 		if(linenum == 10)
-			return strcat("of ",ftos(FIEND_WINTOTAL)," kills wins.");
+			return strcat("of ",ftos(victorytotal)," kills wins.");
 		if(linenum == 11)
 			return " ";
 		if(linenum == 12)
@@ -697,7 +713,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 	{
 		             //"<===== ghetto strlen ruler(40chars) =====>";
 		if(linenum == 1)
-			return strcat("two teams race to collect ",ftos(COINS_WINTOTAL)," coins.");
+			return strcat("two teams race to collect ",ftos(victorytotal)," coins.");
 		if(linenum == 2)
 			return " ";
 		if(linenum == 3)
@@ -713,7 +729,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 		if(linenum == 8)
 			return "first team to reach a combined total";
 		if(linenum == 9)
-			return strcat("of ",ftos(COINS_WINTOTAL)," coins wins the match.");
+			return strcat("of ",ftos(victorytotal)," coins wins the match.");
 		if(linenum == 10)
 			return " ";
 		if(linenum == 11)
@@ -733,7 +749,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 	{
 		             //"<===== ghetto strlen ruler(40chars) =====>";
 		if(linenum == 1)
-			return strcat("players race to collect ",ftos(COINS_WINTOTAL)," coins.");
+			return strcat("players race to collect ",ftos(victorytotal)," coins.");
 		if(linenum == 2)
 			return " ";
 		if(linenum == 3)
@@ -749,7 +765,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 		if(linenum == 8)
 			return "first player to reach a total";
 		if(linenum == 9)
-			return strcat("of ",ftos(COINS_WINTOTAL)," coins wins the match.");
+			return strcat("of ",ftos(victorytotal)," coins wins the match.");
 		if(linenum == 10)
 			return " ";
 		if(linenum == 11)
@@ -789,7 +805,7 @@ string GetMCPObjectiveString(float linenum, float welc, entity e) =
 		if(linenum == 10)
 			return "first team to reach a combined score";
 		if(linenum == 11)
-			return strcat("of ",ftos(BABY_WINTOTAL)," wins the match.");
+			return strcat("of ",ftos(victorytotal)," wins the match.");
 		if(linenum == 12)
 			return " ";
 		if(linenum == 13)

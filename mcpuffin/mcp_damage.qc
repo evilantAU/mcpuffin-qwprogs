@@ -73,8 +73,8 @@ void mcp_Obituary(entity victim, entity attacker) =
 			mcp_ModifyTeamScore(MCPTEAM_BLUE,1);
 		}
 		
-		local string attackerteam = infokey(attacker, "team");
-		local string targteam = infokey(victim, "team");
+		local float attackerteam = attacker.team_no;
+		local float targteam = victim.team_no;
 		
 		local float teamkill = 0;
 		local float selfkill = 0;

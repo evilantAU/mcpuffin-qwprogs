@@ -52,6 +52,28 @@ void touch_mcpcoin() =
 			stuffnotice(other,strcat("you have picked up ",ftos(self.cnt)," coin!"));
 		else
 			stuffnotice(other,strcat("you have picked up ",ftos(self.cnt)," coins!"));
+		if(mcpmode == MCPMODE_COINSFFA)
+		{
+			if(mcpgoal.classname == CN_PLAYER)
+			{
+				if(mcpgoal != other)
+				{
+					if(other.frags > mcpgoal.frags)
+					{
+						bprint(2, strcat(other.netname, " has taken the lead (", ftos(other.frags),")\n"));
+						stuffsound(other, SND_TAKENLEAD);
+						stuffsound(mcpgoal, SND_LOSTLEAD);
+						mcpgoal = other;
+					}
+				}
+			}
+			else
+			{
+				bprint(2, strcat(other.netname, " has taken the lead (", ftos(other.frags),")\n"));
+				stuffsound(other, SND_TAKENLEAD);
+				mcpgoal = other;
+			}
+		}
 		if(other.team_no == MCPTEAM_RED)
 			mcp_ModifyTeamCoinCount(MCPTEAM_RED, self.cnt);
 			
@@ -116,10 +138,28 @@ void mcp_SpawnCoin(entity e, float amnt) =
 	coin.nextthink = time + COINS_DURATION + random();
 	coin.think = remove_mcpcoin;
 };
-
+entity mcp_FFACoinLeader() =
+{
+	local entity leadr = world;
+	local entity te = find(world, classname, CN_PLAYER);
+	while (te) 
+	{
+		if (leadr == world) 
+		{
+			leadr = te;
+		}
+		else
+		{
+			if(te.frags > leadr.frags)
+				leadr = te;
+		}
+		te = find(te, classname, CN_PLAYER);
+	}
+	return leadr;
+}
 void mcp_DropCoins(entity e, float entirety) =
 {
-	if(mcpmode != MCPMODE_COINSTEAM || mcpmode != MCPMODE_COINSFFA)
+	if(mcpmode != MCPMODE_COINSTEAM && mcpmode != MCPMODE_COINSFFA)
 		return;
 	if(matchstate != MATCHSTATE_LIVE)
 		return;
@@ -153,6 +193,18 @@ void mcp_DropCoins(entity e, float entirety) =
 		coinloss--;
 	}
 	mcp_Sound(e, CHAN_AUTO, SND_COINDROP, 1, ATTN_NONE);
+	
+	if(mcpmode == MCPMODE_COINSFFA && mcpgoal == e)
+	{
+		local entity leadr = mcp_FFACoinLeader();
+		if(leadr != e)
+		{
+			bprint(2,strcat(e.netname, " has lost the lead to ",leadr.netname,"\n"));
+			stuffsound(e, SND_LOSTLEAD);
+			stuffsound(leadr, SND_TAKENLEAD);
+			mcpgoal = leadr;
+		}
+	}
 	
 };
 
@@ -227,7 +279,7 @@ void mcpgmthink_live_coinsteam() =
 		redscore = 0;
 		bluescore = 0;
 	}
-	if(redscore >= COINS_WINTOTAL || bluescore >= COINS_WINTOTAL)
+	if(redscore >= victorytotal || bluescore >= victorytotal)
 	{
 		stuffsoundall(SND_BUZZER,world);
 		bprint(2,"\sthe match has finished!\s\n");

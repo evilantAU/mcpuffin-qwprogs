@@ -9,6 +9,21 @@ void mcp_RemoveAllControlPointMarkers() =
 		}
 		te = find(te,classname,CN_CONTROLPOINTMARKER);
 	}
+	
+
+};
+
+void mcp_RemoveAllProgressBars() =
+{
+	local entity te2 = find(world,classname,CN_PROGRESSBAR);
+	while(te2)
+	{
+		if(te2 != world)
+		{
+			remove(te2);
+		}
+		te2 = find(te2,classname,CN_PROGRESSBAR);
+	}	
 };
 
 void mcp_RemoveAllControlPointTrackers() = 
@@ -43,7 +58,6 @@ void think_controlpoint() =
 		{
 			if (head.classname == CN_PLAYER && head.deadflag == DEAD_NO)
 			{
-			
 				if(head.team_no == MCPTEAM_BLUE)
 					blues++;
 				if(head.team_no == MCPTEAM_RED)
@@ -125,6 +139,12 @@ void think_controlpoint() =
 		}		
 	}
 	
+	if(self.team_no == MCPTEAM_BLUE && CONTROLPOINT[self.mcpgrentype].blueprogress <= 0 )
+		return;
+	if(self.team_no == MCPTEAM_RED && CONTROLPOINT[self.mcpgrentype].redprogress <= 0 )
+		return;
+	if(reds == blues)
+		return;
 	head = findradius(CONTROLPOINT[self.mcpgrentype].origin, CONTROLPOINT[self.mcpgrentype].radius);
 	while (head)
 	{
@@ -162,6 +182,42 @@ void mcp_UnLockControlPoint(float cp) =
 		mcp_SpawnControlPointTracker(cp, MCPTEAM_BLUE);
 };
 
+void think_progressbar() =
+{
+	self.nextthink = time + 0.5;
+	local float prog = 0;
+	if(CONTROLPOINT[self.bubble_count].ownedbyteam == MCPTEAM_RED)
+	{
+		prog = (((CONTROLPOINT[self.bubble_count].blueprogress/CONTROLPOINT[self.bubble_count].progressneeded) * 100) / 10);
+		prog = floor(prog);
+		self.frame = prog + 11;
+	}
+	else if(CONTROLPOINT[self.bubble_count].ownedbyteam == MCPTEAM_BLUE)
+	{
+		prog = (((CONTROLPOINT[self.bubble_count].redprogress/CONTROLPOINT[self.bubble_count].progressneeded) * 100) / 10);
+		prog = floor(prog);
+		self.frame = prog + 22;
+	}
+	else
+	{
+		if(CONTROLPOINT[self.bubble_count].redprogress > 0)
+		{
+			prog = (((CONTROLPOINT[self.bubble_count].redprogress/CONTROLPOINT[self.bubble_count].progressneeded) * 100) / 10);
+			prog = floor(prog);
+			self.frame = prog + 22;
+		}
+		else if (CONTROLPOINT[self.bubble_count].blueprogress > 0)
+		{
+			prog = (((CONTROLPOINT[self.bubble_count].blueprogress/CONTROLPOINT[self.bubble_count].progressneeded) * 100) / 10);
+			prog = floor(prog);
+			self.frame = prog + 11;
+		}
+		else
+		{
+			self.frame = 0;
+		}
+	}
+};
 void mcp_MarkControlPoint(float cp) =
 {
 	//mcp_spr_cp.spr
@@ -169,6 +225,14 @@ void mcp_MarkControlPoint(float cp) =
 	
 	if(CONTROLPOINT[cp].isunlocked)
 	{
+		local entity prog = spawn();
+		prog.classname = CN_PROGRESSBAR;
+		setorigin(prog,CONTROLPOINT[cp].origin + '0 0 48');
+		mcp_SetModel(prog, SPR_PROGRESSBAR, DIM_WORLD);
+		prog.nextthink = time + 0.5;
+		prog.think = think_progressbar;
+		prog.bubble_count = cp;
+		
 		local entity markb = spawn();
 		markb.classname = CN_CONTROLPOINTMARKER;
 		setorigin(markb,CONTROLPOINT[cp].origin + '0 0 48');
@@ -237,6 +301,7 @@ void mcp_ControlPointCaptured(float cp, float byteam) =
 	
 	mcp_RemoveAllControlPointTrackers();
 	mcp_RemoveAllControlPointMarkers();
+	mcp_RemoveAllProgressBars();
 	
 	mcp_LockControlPoint(MCPCP_BLUE1);
 	mcp_LockControlPoint(MCPCP_BLUE2);
@@ -435,6 +500,10 @@ void think_midcontrol() =
 				CONTROLPOINT[MCPCP_MID].redprogress = 0;
 		}
 	}
+	
+	if(progressmade <= 0)
+		return;
+		
 	head = findradius(CONTROLPOINT[MCPCP_MID].origin, CONTROLPOINT[MCPCP_MID].radius);
 	while (head)
 	{

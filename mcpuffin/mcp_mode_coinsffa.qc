@@ -23,29 +23,29 @@ void mcpgmthink_result_coinsffa() =
 	
 	if(self.bubble_count == 1)
 	{
-		local float w = mcp_GetTeamPlacement(1);
-		local string winner = "";
-		if(w == MCPTEAM_BLUE)
-			winner = strconv(1,2,2,"blue");
-		if (w == MCPTEAM_RED)
-			winner = strconv(1,2,2,"red");
-		bprint(2, strcat(winner,"\s is the winner! \s\n"));
-		stuffsoundteam(mcp_GetTeamPlacement(1), SND_YOUWIN, world);
-		stuffsoundteam(mcp_GetTeamPlacement(0), SND_YOULOSE,world);
+		if(mcpgoal.classname == CN_PLAYER)
+		{
+			bprint(2, strcat(mcpgoal.netname,"\s is the winner! \s\n"));
+			stuffsound(mcpgoal, SND_YOUWIN);
+			stuffsoundall(SND_YOULOSE,mcpgoal);
+		}
+		else
+		{
+			bprint(2, strcat("\snoone wins?\s\n"));	
+		}
 		self.nextthink = time + 1.5; //just for better sound flow
 	}
 	if(self.bubble_count == 2)
 	{
-		stuffsoundteam(mcp_GetTeamPlacement(1), SND_CLAP,world);
-		stuffsoundteam(mcp_GetTeamPlacement(0), SND_BOO,world);	
+		if(mcpgoal.classname == CN_PLAYER)
+		{
+			stuffsound(mcpgoal, SND_CLAP);
+			stuffsoundall(SND_BOO, mcpgoal);
+		}	
 	}
 	if(self.bubble_count == 3)
 	{
-		if(redscore == 0 || bluescore == 0)
-		{
-			stuffsoundteam(mcp_GetTeamPlacement(1),SND_FLAWLESS,world);
-			stuffsoundteam(mcp_GetTeamPlacement(0),SND_YOUSUCK,world);
-		}
+		
 	}
 	if(self.bubble_count >= 4)
 	{
@@ -68,7 +68,7 @@ void mcpgmthink_live_coinsffa() =
 		redscore = 0;
 		bluescore = 0;
 	}
-	if(redscore >= COINS_WINTOTAL || bluescore >= COINS_WINTOTAL)
+	if(mcpgoal.classname == CN_PLAYER && mcpgoal.frags >= victorytotal)
 	{
 		stuffsoundall(SND_BUZZER,world);
 		bprint(2,"\sthe match has finished!\s\n");

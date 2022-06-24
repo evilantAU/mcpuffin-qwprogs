@@ -12,6 +12,22 @@ void mcp_ModifyTeamScore(float t, float amnt) =
 	}
 };
 
+void mcp_SetVictoryTotal() =
+{
+	localcmd(strcat("localinfo ", IK_ADMINCHANGEVICTORYTOTAL," -1\n"));
+	if(mcpmode == MCPMODE_FIEND)
+		victorytotal = VICTORYTOTAL_FIEND;
+	if(mcpmode == MCPMODE_BABYFIEND)
+		victorytotal = VICTORYTOTAL_BABYFIEND;
+	if(mcpmode == MCPMODE_COINSFFA)
+		victorytotal = VICTORYTOTAL_COINSFFA;
+	if(mcpmode == MCPMODE_COINSTEAM)
+		victorytotal = VICTORYTOTAL_COINSTEAM;
+	if(mcpmode == MCPMODE_SACRIFICE)
+		victorytotal = VICTORYTOTAL_SACRIFICE;
+	if(mcpmode == MCPMODE_5CP)
+		victorytotal = VICTORYTOTAL_5CP;
+};
 
 float mcp_GetTeamPlacement(float victor) =
 {
@@ -34,7 +50,7 @@ float mcp_GetTeamPlacement(float victor) =
 void mcp_ChangeMode(entity e, float m) =
 {
 	bprint(2,strcat(e.netname, " is attempting to change mode to ",mcp_ModeString(m,1),"\n"));
-	stuffcmd(e,strcat("rcon localinfo ",IK_MCPMODE," ",ftos(m),"\n"));
+	stuffcmd(e,strcat("rcon localinfo ",IK_ADMINCHANGEMODE," ",ftos(m),"\n"));
 	stuffcmd(e,strcat("rcon map ",mapname,"\n"));
 };
 
@@ -125,27 +141,36 @@ void mcp_SpawnSpawnPointSprites() =
 
 float mcp_AllPlayersReady() =
 {
+	
+	mcpgm.message = "";
 	local float totalplayers = 0;
 	local float readyplayers = 0;
 	local float forceplayers = 0;
-	if(infokey(world, IK_FORCESTART) == "1")
+	if(infokey(world, IK_ADMINFORCESTART) == "1")
 	{
 		bprint(2,"\sadmin forcestarted the game! get psyched!\s\n");
-		localcmd(strcat("localinfo ", IK_FORCESTART," 0\n"));
+		localcmd(strcat("localinfo ", IK_ADMINFORCESTART," 0\n"));
 		return 1;
 	}
 
 	local entity te = find(world, classname, CN_PLAYER);
 	while(te)
 	{
-		if(te != world && te.has_disconnected == 0 && te.team_no != MCPTEAM_NONE)
+		if(te != world && te.has_disconnected == 0 && te.team_no != MCPTEAM_NONE && te.netname != "")
 		{
 			totalplayers++;
 			if(te.is_ready == READYSTATE_READY)
+			{
 				readyplayers++;
-			if(te.is_ready == READYSTATE_FORCE)
+			}
+			else if(te.is_ready == READYSTATE_FORCE)
 			{
 				forceplayers++;
+				
+			}
+			else
+			{
+				mcpgm.message = strcat(mcpgm.message,te.netname," ");
 			}
 		}
 		te = find(te,classname,CN_PLAYER);
@@ -153,6 +178,13 @@ float mcp_AllPlayersReady() =
 	
 	if(totalplayers == 0)
 		return 0;
+	
+	if(time > mcpgm.mgun_spindownfinish)
+	{
+		bprint(2,strcat("(",mcp_ModeString(mcpmode,0),") waiting for players: ",mcpgm.message,"\n"));
+		mcpgm.mgun_spindownfinish = time + 3;
+	}
+	
 	if(readyplayers == totalplayers || forceplayers > (totalplayers/2))
 	{
 		return 1;
@@ -182,12 +214,6 @@ void mcp_ChangeMatchState(float ms) =
 	
 };
 
-
-void think_gm_waitforplayers() =
-{
-	self.nextthink = time + 1;
-
-};
 void KillExistingMCPGM() =
 {
 	if(mcpgm == world)
@@ -245,7 +271,6 @@ float mcp_isMapSacViable() =
 void think_readyupspammer() =
 {
 	self.nextthink = time + 5;
-	mcpgm.message = "";
 	if(matchstate != MATCHSTATE_WAITFORPLAYERS)
 	{
 		self.nextthink = time;
@@ -285,7 +310,6 @@ void think_readyupspammer() =
 					stuffsound(te,SND_HURRYUP1);
 					
 				stuffnotice(te,"you are \snot ready\s. type ready in console.");
-				mcpgm.message = strcat(mcpgm.message, te.netname," ");
 			}
 			else
 				sprint(te,PRINT_HIGH,"you are \sready\s, good job!\n");
@@ -293,7 +317,7 @@ void think_readyupspammer() =
 		te = find(te,classname,CN_PLAYER);
 	}
 	
-	bprint(2,strcat("(",mcp_ModeString(mcpmode,0),") waiting for players: ", mcpgm.message,"\n"));
+	
 };
 
 void mcp_SetMapVoteWinner() =
@@ -521,7 +545,7 @@ void mcpgmthink_changemap() =
 		return;
 	}
 
-	localcmd(strcat("localinfo ",IK_MCPMODE," ",ftos(VOTECHOICE[mcpgm.reload_grenade_launcher].modetype),"\n"));
+	localcmd(strcat("localinfo ",IK_ADMINCHANGEMODE," ",ftos(VOTECHOICE[mcpgm.reload_grenade_launcher].modetype),"\n"));
 	changelevel(VOTECHOICE[mcpgm.reload_rocket_launcher].mapstring);
 	self.cnt++;
 };
@@ -756,12 +780,29 @@ void mcp_RemoveMapItems() =
 	mcp_RemoveSpecificMapItem("item_tfgoal");
 	mcp_RemoveSpecificMapItem("info_tfgoal");
 };
+
+void think_adminchangecheck() =
+{
+	self.nextthink = time + 1;
+	
+	if(stof(infokey(world,IK_ADMINCHANGEVICTORYTOTAL)) == -1)
+		return;
+	
+	if(infokey(world,IK_ADMINCHANGEVICTORYTOTAL) == "")
+		return;
+
+	bprint(2,strcat("\schanging victory total from: \s",ftos(victorytotal),"\s to: \s",infokey(world,IK_ADMINCHANGEVICTORYTOTAL),"\s. restart not required.\s\n"));
+	stuffsoundall(SND_NOTICE, world);
+	victorytotal = stof(infokey(world,IK_ADMINCHANGEVICTORYTOTAL));
+	localcmd(strcat("localinfo ", IK_ADMINCHANGEVICTORYTOTAL," -1\n"));
+};
+
 void mcp_SpawnMCPGM() =
 {
 	if(mcpgm != world)
 		KillExistingMCPGM();
 		
-	mcpmode =  stof(infokey(world,IK_MCPMODE));
+	mcpmode =  stof(infokey(world,IK_ADMINCHANGEMODE));
 	
 	if(mcpmode == MCPMODE_NONE)
 		mcpmode = MCPMODE_SACRIFICE;
@@ -794,6 +835,7 @@ void mcp_SpawnMCPGM() =
 	}
 	mcp_RemoveMapItems();
 	mcp_SpawnSpawnPointSprites();
+	mcp_SetVictoryTotal();
 	
 	local entity gm = spawn();
 	gm.classname = CN_GAMEMASTER;
@@ -810,4 +852,9 @@ void mcp_SpawnMCPGM() =
 	rs.classname = CN_READYUPSPAMMER;
 	rs.think = think_readyupspammer;
 	rs.nextthink = time + 2;
+	
+	local entity acc = spawn();
+	acc.classname = CN_ADMINCHANGECHECKER;
+	acc.think = think_adminchangecheck;
+	acc.nextthink = time + 1;
 };

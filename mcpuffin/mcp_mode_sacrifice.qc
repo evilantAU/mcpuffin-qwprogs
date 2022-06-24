@@ -48,16 +48,16 @@ void mcp_ScoreTick() =
 	{
 		if (te.team_no == mcpgoal.team_no) 
 		{
-			if(infokey(te, "scoreticktext") != "0")
+			if(infokey(te, IK_SCORETICKTEXT) != "0")
 				sprint(te,PRINT_HIGH, "your team controls flag (+1 point)\n");
-			if(infokey(te, "scoreticksound") != "0")
+			if(infokey(te, IK_SCORETICKSOUND) != "0")
 				stuffsound(te, SND_SCORETICKTEAM);
 		}
 		else
 		{
-			if(infokey(te, "scoreticktext") != "0")
+			if(infokey(te, IK_SCORETICKTEXT) != "0")
 				sprint(te,PRINT_HIGH, "enemy team controls flag (+1 point)\n");
-			if(infokey(te, "scoreticksound") != "0")
+			if(infokey(te, IK_SCORETICKSOUND) != "0")
 				stuffsound(te, SND_SCORETICKENEMY);
 		}
 		
@@ -570,7 +570,7 @@ void mcpgmthink_live_sac() =
 		mcp_SpawnFlagTrailMaker();
 
 	}
-	if(redscore == SACRIFICE_WINTOTAL || bluescore == SACRIFICE_WINTOTAL)
+	if(redscore == victorytotal || bluescore == victorytotal)
 	{
 		stuffsoundall(SND_BUZZER,world);
 		bprint(2,"\sthe match has finished!\s\n");

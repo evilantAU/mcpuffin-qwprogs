@@ -681,7 +681,7 @@ void mcp_ImpulseCaptureDeadOrAlive(entity e) =
 	if(e.impulse == MCPIMPULSE_FORCESTARTALL)
 	{
 		e.impulse = 0;
-		stuffcmd(e,strcat("rcon localinfo ", IK_FORCESTART," 1\n"));
+		stuffcmd(e,strcat("rcon localinfo ", IK_ADMINFORCESTART," 1\n"));
 	}
 	if(e.impulse == MCPIMPULSE_FORCEVOTE)
 	{

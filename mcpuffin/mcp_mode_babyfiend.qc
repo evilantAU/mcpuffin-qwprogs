@@ -68,7 +68,7 @@ void mcpgmthink_live_baby() =
 		redscore = 0;
 		return;
 	}
-	if(redscore >= BABY_WINTOTAL || bluescore >= BABY_WINTOTAL)
+	if(redscore >= victorytotal || bluescore >= victorytotal)
 	{
 		stuffsoundall(SND_BUZZER,world);
 		bprint(2,"\sthe match has finished!\s\n");

@@ -681,7 +681,6 @@ void SpawnTeleBall() =
 		newmis.skin = 2;
 	else
 		newmis.skin = 0;
-	
 
 	//setsize (newmis, '-8 -8 -8', '8 8 8');
 	//setsize(newmis,'0 0 0', '0 0 0');
@@ -998,7 +997,7 @@ void mcp_BecomeDrone(entity e) =
 	mcpdrone_stand();
 	mcp_SetPlayerSpeed(e);
 	
-	local string ec = infokey(e, IK_EC);
+	local string ec = infokey(e, IK_EXECCLASSCFG);
 		
 	if(ec == "1" || ec == "on" || ec == "2")
 		stuffcmd(e, "exec drone.cfg\n");
@@ -1020,7 +1019,7 @@ void mcp_UnBecomeDrone(entity e) =
 	mcp_UpdateHudAmmo(e, e.mcpslot[e.weapon].type);
 	mcp_SetPlayerSpeed(e);
 	
-	local string ec = infokey(e, IK_EC);
+	local string ec = infokey(e, IK_EXECCLASSCFG);
 	if(ec == "1" || ec == "on")
 		stuffcmd(e, "exec technician.cfg\n");
 	if(ec == "2")

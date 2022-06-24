@@ -662,7 +662,7 @@ void mcp_ExecAutoexec(entity e) =
 
 void mcp_ExecTeamConfig(entity e) =
 {
-	local string et = infokey(self, IK_ET);
+	local string et = infokey(self, IK_EXECTEAMCFG);
 	
 	if(et == "1" || et == "on")
 	{
@@ -677,7 +677,7 @@ void mcp_ExecTeamConfig(entity e) =
 
 void mcp_ExecClassConfig(entity e) =
 {
-	local string ec = infokey(e, IK_EC);
+	local string ec = infokey(e, IK_EXECCLASSCFG);
 		
 	if(ec == "1" || ec == "on")
 	{
@@ -850,9 +850,7 @@ void mcp_SetupRole(entity e) =
 				mcp_ChangeSlot(e,i);
 				break;
 			}	
-		}
-		bprint(2,strcat(ftos(e.nextpc),":isthisnextpc\n"));
-		bprint(2,strcat(ftos(e.playerclass),":isthiscurrent\n"));		
+		}	
 	}
 };
 

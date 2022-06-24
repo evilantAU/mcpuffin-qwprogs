@@ -529,6 +529,10 @@ void mcp_PreCache() =
 	#define SND_YOUHAVEFLAG			"mcpuffin_b1/youhaveflag.wav"
 	#define SND_ENEMYHASFLAG		"mcpuffin_b1/enemyhasflag.wav"
 	#define SND_TEAMHASFLAG			"mcpuffin_b1/teamhasflag.wav"
+	#define SND_TAKENLEAD			"mcpuffin_b1/takenlead.wav"
+	#define SND_LOSTLEAD			"mcpuffin_b1/lostlead.wav"
+	precache_sound(SND_TAKENLEAD);
+	precache_sound(SND_LOSTLEAD);
 	precache_sound(SND_REDSCORES);
 	precache_sound(SND_BLUESCORES);
 	precache_sound(SND_YOUHAVEFLAG);
@@ -827,6 +831,7 @@ void mcp_PreCache() =
 	#define SPR_AIRBLAST		"progs/mcpuffin_b1/mcp_spr_airblast.spr"
 	#define SPR_HARPOONMARKER	"progs/mcpuffin_b1/mcp_spr_harpoonmarker.spr"
 	#define SPR_CPMARKER		"progs/mcpuffin_b1/mcp_spr_cpmarker.spr"
+	#define SPR_PROGRESSBAR		"progs/mcpuffin_b1/mcp_spr_progressbar.spr"
 	precache_model(SPR_HARPOONMARKER);
 	precache_model(SPR_AIRBLAST);
 	precache_model(SPR_HEALNUM);
@@ -836,4 +841,5 @@ void mcp_PreCache() =
 	precache_model(SPR_TRAIL);
 	precache_model(SPR_BUBBLE);
 	precache_model(SPR_CPMARKER);
+	precache_model(SPR_PROGRESSBAR);
 };

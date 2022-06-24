@@ -86,7 +86,7 @@ void mcpgmthink_live_fiend() =
 		redscore = 0;
 		bluescore = 0;
 	}
-	if(redscore == FIEND_WINTOTAL || bluescore == FIEND_WINTOTAL)
+	if(redscore == victorytotal || bluescore == victorytotal)
 	{
 		stuffsoundall(SND_BUZZER,world);
 		bprint(2,"\sthe match has finished!\s\n");

@@ -111,7 +111,7 @@ void () touch_lootarmour = {
 
 void mcp_DropLootArmour(entity e) = 
 {
-	if(mcpmode != MCPMODE_SACRIFICE)
+	if(mcpmode == MCPMODE_BABYFIEND)
 		return;
 		
 	newmis = spawn();
@@ -135,7 +135,7 @@ void mcp_DropLootArmour(entity e) =
 
 void mcp_DropLootHealth(entity e) = 
 {
-	if(mcpmode != MCPMODE_SACRIFICE)
+	if(mcpmode == MCPMODE_BABYFIEND)
 		return;
 		
 	newmis = spawn();
@@ -161,7 +161,9 @@ void mcp_DropLootHealth(entity e) =
 
 void mcp_DropLootGrenade(entity e) = 
 {
-	if(mcpmode != MCPMODE_SACRIFICE)
+	if(mcpmode == MCPMODE_BABYFIEND)
+		return;
+	if(mcpmode != MCPMODE_5CP && mcpmode != MCPMODE_SACRIFICE)
 		return;
 		
 	newmis = spawn();

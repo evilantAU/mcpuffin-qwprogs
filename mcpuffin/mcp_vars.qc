@@ -48,6 +48,7 @@ float redattcp;
 float reddefcp;
 float blueattcp;
 float bluedefcp;
+float victorytotal;
 
 .float mcpclientdim;
 .float mcpweapstate;
