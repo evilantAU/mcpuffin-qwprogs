@@ -66,6 +66,7 @@ float victorytotal;
 .float mcpspecialtype;
 .float mcpgrencount;
 .float fiendmeleehit;
+.float lastfootstep;
 
 
 entity multi_ent;

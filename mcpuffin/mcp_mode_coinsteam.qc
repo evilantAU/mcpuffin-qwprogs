@@ -192,7 +192,7 @@ void mcp_DropCoins(entity e, float entirety) =
 		mcp_SpawnCoin(e,1);
 		coinloss--;
 	}
-	mcp_Sound(e, CHAN_AUTO, SND_COINDROP, 1, ATTN_NONE);
+	mcp_Sound(e, CHAN_AUTO, SND_COINDROP, 1, ATTN_NORM);
 	
 	if(mcpmode == MCPMODE_COINSFFA && mcpgoal == e)
 	{

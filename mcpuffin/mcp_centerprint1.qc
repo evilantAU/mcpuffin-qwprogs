@@ -407,8 +407,16 @@ string GetCprintString (entity e, float _menutype) = {
 		{
 			local float vic = 0;
 			local float timr = time - mcpgm.heat;
-			if(e.team_no ==  mcp_GetTeamPlacement(1))
-				vic = 1;
+			if(mcpmode == MCPMODE_COINSFFA)
+			{
+				if(mcpgoal == e)
+					vic = 1;
+			}
+			else
+			{
+				if(e.team_no ==  mcp_GetTeamPlacement(1))
+					vic = 1;
+			}
 		
 			line1 =  "\n";
 			line2 =  "\n";

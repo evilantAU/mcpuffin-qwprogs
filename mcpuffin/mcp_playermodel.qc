@@ -190,7 +190,24 @@ void()	mcpplayer_run =[	$rockrun1,	mcpplayer_run	]
 		mcpplayer_stand1();
 		return;
 	}
+	if(fabs(self.velocity_x) > 100 || fabs(self.velocity_y) > 100)
+	{
+		if(self.flags & FL_ONGROUND && self.waterlevel == 0 && self.iscloaked == 0)
+		{
+			if(time >= self.lastfootstep && self.deadflag == DEAD_NO)
+			{
+				local float rng = RNG(2);
+				local string fstep = SND_FOOTSTEP1;
+				if(rng == 1)
+					fstep = SND_FOOTSTEP1;
+				else
+					fstep = SND_FOOTSTEP2;
 
+				mcp_Sound(self, CHAN_VOICE, fstep, 1, ATTN_NORM);
+				self.lastfootstep = time + FOOTSTEPSOUNDINTERVAL;
+			}
+		}
+	}
 	if (mcp_VisibleWeapon (self) == MCPWEAP_AXE)
 	{
 		if (self.walkframe == 6)

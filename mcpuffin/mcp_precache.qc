@@ -3,6 +3,7 @@ void mcp_PreCache() =
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	//ID1 SOUNDS
 	
+	
 	//AMBIENCE
 	#define SND_BUZZ1			"ambience/buzz1.wav"
 	#define SND_COMP1			"ambience/comp1.wav"
@@ -18,20 +19,21 @@ void mcp_PreCache() =
 	#define SND_AWATER1			"ambience/water1.wav"
 	#define SND_WIND2			"ambience/wind2.wav"
 	#define SND_WINDFLY			"ambience/windfly.wav"
-	precache_sound(SND_BUZZ1);
-	precache_sound(SND_COMP1);
-	precache_sound(SND_DRIP1);
-	precache_sound(SND_DRONE6);
-	precache_sound(SND_FIRE1);
-	precache_sound(SND_FL_HUM1);
-	precache_sound(SND_HUM1);
-	precache_sound(SND_SUCK1);
-	precache_sound(SND_SWAMP1);
-	precache_sound(SND_SWAMP2);
-	precache_sound(SND_THUNDER1);
-	precache_sound(SND_AWATER1);
-	precache_sound(SND_WIND2);
-	precache_sound(SND_WINDFLY);
+	//precache_sound(SND_BUZZ1);
+	//precache_sound(SND_COMP1);
+	//precache_sound(SND_DRIP1);
+	//precache_sound(SND_DRONE6);
+	//precache_sound(SND_FIRE1);
+	//precache_sound(SND_FL_HUM1);
+	//precache_sound(SND_HUM1);
+	//precache_sound(SND_SUCK1);
+	//precache_sound(SND_SWAMP1);
+	//precache_sound(SND_SWAMP2);
+	//precache_sound(SND_THUNDER1);
+	//precache_sound(SND_AWATER1);
+	//precache_sound(SND_WIND2);
+	//precache_sound(SND_WINDFLY);
+	
 	
 	//BUTTONS
 	#define SND_AIRBUT1			"buttons/airbut1.wav"
@@ -119,22 +121,22 @@ void mcp_PreCache() =
 	#define SND_R_ITEM2			"items/r_item2.wav"
 	#define SND_SUIT			"items/suit.wav"
 	#define SND_SUIT2			"items/suit2.wav"
-	precache_sound(SND_ARMOR1);
-	precache_sound(SND_DAMAGE);
-	precache_sound(SND_DAMAGE2);
-	precache_sound(SND_DAMAGE3);
-	precache_sound(SND_HEALTH1);
-	precache_sound(SND_INV1);
+	//precache_sound(SND_ARMOR1);
+	//precache_sound(SND_DAMAGE);
+	//precache_sound(SND_DAMAGE2);
+	//precache_sound(SND_DAMAGE3);
+	//precache_sound(SND_HEALTH1);
+	//precache_sound(SND_INV1);
 	precache_sound(SND_INV2);
 	precache_sound(SND_INV3);
-	precache_sound(SND_ITEMBK2);
+	//precache_sound(SND_ITEMBK2);
 	precache_sound(SND_PROTECT);
 	precache_sound(SND_PROTECT2);
 	precache_sound(SND_PROTECT3);
 	precache_sound(SND_R_ITEM1);
 	precache_sound(SND_R_ITEM2);
-	precache_sound(SND_SUIT);
-	precache_sound(SND_SUIT2);
+	//precache_sound(SND_SUIT);
+	//precache_sound(SND_SUIT2);
 	
 	//MISC
 	#define SND_BASEKEY			"misc/basekey.wav"
@@ -269,15 +271,15 @@ void mcp_PreCache() =
 	#define SND_SHMBLR_SIDLE		"shambler/sidle.wav"
 	#define SND_SHMBLR_SMACK		"shambler/smack.wav"
 	#define SND_SHMBLR_SSIGHT		"shambler/ssight.wav"
-	precache_sound(SND_SHMBLR_MELEE1);
-	precache_sound(SND_SHMBLR_MELEE2);
-	precache_sound(SND_SHMBLR_SATTCK1);
-	precache_sound(SND_SHMBLR_SBOOM);
-	precache_sound(SND_SHMBLR_SDEATH);
-	precache_sound(SND_SHMBLR_SHURT2);
-	precache_sound(SND_SHMBLR_SIDLE);
-	precache_sound(SND_SHMBLR_SMACK);
-	precache_sound(SND_SHMBLR_SSIGHT);
+	//precache_sound(SND_SHMBLR_MELEE1);
+	//precache_sound(SND_SHMBLR_MELEE2);
+	//precache_sound(SND_SHMBLR_SATTCK1);
+	//precache_sound(SND_SHMBLR_SBOOM);
+	//precache_sound(SND_SHMBLR_SDEATH);
+	//precache_sound(SND_SHMBLR_SHURT2);
+	//precache_sound(SND_SHMBLR_SIDLE);
+	//precache_sound(SND_SHMBLR_SMACK);
+	//precache_sound(SND_SHMBLR_SSIGHT);
 	
 	//WEAPONS
 	#define	SND_AX1				"weapons/ax1.wav"
@@ -635,33 +637,42 @@ void mcp_PreCache() =
 	precache_sound(SND_SCORETICKTEAM);
 	precache_sound(SND_SCORETICKENEMY);
 	
+	#define SND_FOOTSTEP1			"mcpuffin_b1/footstep1.wav"
+	#define SND_FOOTSTEP2			"mcpuffin_b1/footstep2.wav"
+	#define SND_FOOTSTEP3			"mcpuffin_b1/footstep3.wav"
+	#define SND_FOOTSTEP4			"mcpuffin_b1/footstep4.wav"
+	precache_sound(SND_FOOTSTEP1);
+	precache_sound(SND_FOOTSTEP2);
+	//precache_sound(SND_FOOTSTEP3);
+	//precache_sound(SND_FOOTSTEP4);
+	
 	//grentimers
 	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer1.wav");
 	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer2.wav");
 	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer3.wav");
 	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer4.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer5.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer6.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer7.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer8.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer9.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer10.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer11.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer12.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer13.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer14.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer15.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer16.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer17.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer18.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer19.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer20.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer21.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer22.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer23.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer24.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer25.wav");
-	precache_sound("mcpuffin_b1/grentimers/mcp_grentimer26.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer5.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer6.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer7.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer8.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer9.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer10.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer11.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer12.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer13.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer14.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer15.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer16.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer17.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer18.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer19.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer20.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer21.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer22.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer23.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer24.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer25.wav");
+	//precache_sound("mcpuffin_b1/grentimers/mcp_grentimer26.wav");
 	
 	//PLAYER MODELS
 	#define MDL_MCPPLAYER			"progs/mcpuffin_b1/mcp_player.mdl"
@@ -832,6 +843,10 @@ void mcp_PreCache() =
 	#define SPR_HARPOONMARKER	"progs/mcpuffin_b1/mcp_spr_harpoonmarker.spr"
 	#define SPR_CPMARKER		"progs/mcpuffin_b1/mcp_spr_cpmarker.spr"
 	#define SPR_PROGRESSBAR		"progs/mcpuffin_b1/mcp_spr_progressbar.spr"
+	#define SPR_CAPPOINTS		"progs/mcpuffin_b1/mcp_spr_cappoints.spr"
+	#define SPR_COUNTDOWN		"progs/mcpuffin_b1/mcp_spr_countdown.spr"
+	precache_model(SPR_CAPPOINTS);
+	precache_model(SPR_COUNTDOWN);
 	precache_model(SPR_HARPOONMARKER);
 	precache_model(SPR_AIRBLAST);
 	precache_model(SPR_HEALNUM);

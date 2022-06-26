@@ -9,8 +9,6 @@ void mcp_RemoveAllControlPointMarkers() =
 		}
 		te = find(te,classname,CN_CONTROLPOINTMARKER);
 	}
-	
-
 };
 
 void mcp_RemoveAllProgressBars() =
@@ -45,6 +43,7 @@ void think_controlpoint() =
 	
 	if(matchstate != MATCHSTATE_LIVE)
 		return;
+		
 	local float teaminfavour = MCPTEAM_NONE;
 	local float reds = 0;
 	local float blues = 0;
@@ -122,6 +121,9 @@ void think_controlpoint() =
 	}
 	else
 	{
+		if(reds == blues && reds != 0)
+			return;
+		
 		if(CONTROLPOINT[self.mcpgrentype].blueprogress > 0)
 		{
 			CONTROLPOINT[self.mcpgrentype].blueprogress = CONTROLPOINT[self.mcpgrentype].blueprogress - MCPCP_PROGRESSPERPLAYER;
@@ -484,6 +486,9 @@ void think_midcontrol() =
 	}
 	else
 	{
+		if(reds == blues && reds != 0)
+			return;
+			
 		if(CONTROLPOINT[MCPCP_MID].blueprogress > 0)
 		{
 			CONTROLPOINT[MCPCP_MID].blueprogress = CONTROLPOINT[MCPCP_MID].blueprogress - MCPCP_PROGRESSPERPLAYER;

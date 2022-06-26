@@ -447,6 +447,30 @@ void touch_mcpcappoint() =
 	}
 };
 
+void think_sacmarker() =
+{
+	self.nextthink = time + 0.5;
+	if(matchstate > MATCHSTATE_COUNTDOWN)
+		remove(self);
+};
+
+void mcp_SpawnSacMarker(vector o, float t) = 
+{
+		local entity te = spawn();
+		te.nextthink = time + 0.5;
+		te.think = think_sacmarker;
+		mcp_SetModel(te, SPR_CAPPOINTS, DIM_WORLD);
+		setsize (te, '-16 -16 -48', '16 16 32'); 
+		te.origin = o + '0 0 64';
+		te.movetype = MOVETYPE_BOUNCE;
+		te.solid = SOLID_TRIGGER;
+		if(t == MCPTEAM_BLUE)
+			te.frame = 1;
+		else if (t == MCPTEAM_RED)
+			te.frame = 2;
+		else
+			te.frame = 0;
+};
 
 
 
@@ -469,6 +493,8 @@ void mcp_SetupSacCappoints() =
 		mcp_SetModel(bluecp, MDL_MCPCAPPOINT, DIM_WORLD);
 		bluecp.skin = 1;
 		
+		mcp_SpawnSacMarker(bspblue.origin, MCPTEAM_BLUE);
+		
 	}
 	if(bspred != world)
 	{
@@ -482,6 +508,8 @@ void mcp_SetupSacCappoints() =
 		redcp.solid = SOLID_TRIGGER;
 		mcp_SetModel(redcp, MDL_MCPCAPPOINT, DIM_WORLD);
 		redcp.skin = 2;
+		
+		mcp_SpawnSacMarker(bspred.origin, MCPTEAM_RED);
 	}
 	if(bspflagspawn != world)
 	{
@@ -494,6 +522,8 @@ void mcp_SetupSacCappoints() =
 		flagspawn.solid = SOLID_TRIGGER;
 		mcp_SetModel(flagspawn, MDL_MCPCAPPOINT, DIM_WORLD);
 		flagspawn.skin = 0;
+		
+		mcp_SpawnSacMarker(bspflagspawn.origin, MCPTEAM_NONE);
 	}
 
 };
