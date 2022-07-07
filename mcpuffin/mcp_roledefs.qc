@@ -267,7 +267,7 @@ mcproletype MCPROLEDICT[15] =
 		ROLE_BABYFIEND,	//role#
 		0,		//skinblue
 		0,		//skinred
-		25,		//maxhealth
+		20,		//maxhealth
 		0,		//maxarmour
 		250,		//speed
 		MCPGREN_NONE,

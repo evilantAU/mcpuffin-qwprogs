@@ -68,10 +68,6 @@ void mcp_Obituary(entity victim, entity attacker) =
 {
 	if(victim.classname == CN_PLAYER)
 	{
-		if(mcpmode == MCPMODE_BABYFIEND && victim.playerclass == ROLE_BABYFIEND && attacker.playerclass == ROLE_HUNTER)
-		{
-			mcp_ModifyTeamScore(MCPTEAM_BLUE,1);
-		}
 		
 		local float attackerteam = attacker.team_no;
 		local float targteam = victim.team_no;
@@ -83,17 +79,23 @@ void mcp_Obituary(entity victim, entity attacker) =
 		if(attacker.classname == CN_PLAYER)
 		{
 			if(victim == attacker)
+			{
 				selfkill = 1;
+				if(mcpmode == MCPMODE_FIEND || mcpmode == MCPMODE_BABYFIEND)
+					mcp_ModifyTeamScore(attacker.team_no, -1);
+			}
 			else if(targteam == attackerteam)
+			{
 				teamkill = 1;
+				if(mcpmode == MCPMODE_FIEND || mcpmode == MCPMODE_BABYFIEND)
+					mcp_ModifyTeamScore(attacker.team_no, -1);
+			}
 			else if(targteam != attackerteam)
 			{
 				enemykill = 1;
 				mcp_KillStreak(attacker);
-				if(mcpmode == MCPMODE_FIEND)
-				{
+				if(mcpmode == MCPMODE_FIEND || mcpmode == MCPMODE_BABYFIEND)
 					mcp_ModifyTeamScore(attacker.team_no, 1);
-				}
 			}
 		}
 		
@@ -232,16 +234,22 @@ void mcp_Obituary(entity victim, entity attacker) =
 			{
 				if(enemykill)
 					bprint(PRINT_MEDIUM, strcat(victim.netname, " ate a direct rocket from ", attacker.netname, "\n"));
+				if(selfkill)
+					bprint(PRINT_MEDIUM, strcat(victim.netname, " somehow rocketed themself\n"));
 			}
 			else if(deathmsg == MCPDEATH_ROCKET_DETONATE)
 			{
 				if(enemykill)
 					bprint(PRINT_MEDIUM, strcat(victim.netname, " died to a detonated rocket from ", attacker.netname, "\n"));
+				if(selfkill)
+					bprint(PRINT_MEDIUM, strcat(victim.netname, " detonated a rocket on themself\n"));
 			}
 			else if(deathmsg == MCPDEATH_ROCKET_SPLASH)
 			{
 				if(enemykill)
 					bprint(PRINT_MEDIUM, strcat(victim.netname, " was smeared by ", attacker.netname, "'s rocket\n"));
+				if(selfkill)
+					bprint(PRINT_MEDIUM, strcat(victim.netname, " got too close to their rocket\n"));
 			}
 			
 			else if(deathmsg == MCPDEATH_ROCKET_HARPOON)

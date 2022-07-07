@@ -56,11 +56,30 @@ void()  mcpfiend_run =[   $frun1,      mcpfiend_run      ]
 
 	
 	
-		if (self.walkframe >= 6)
-			self.walkframe = 0;
-		self.frame = $frun1 + self.walkframe;
+	if (self.walkframe >= 6)
+		self.walkframe = 0;
+	self.frame = $frun1 + self.walkframe;
 	
 	self.walkframe = self.walkframe + 1;
+	
+	if(fabs(self.velocity_x) > 100 || fabs(self.velocity_y) > 100)
+	{
+		if(self.flags & FL_ONGROUND && self.waterlevel == 0 && self.iscloaked == 0)
+		{
+			if(time >= self.lastfootstep && self.deadflag == DEAD_NO)
+			{
+				local float rng = RNG(2);
+				local string fstep = SND_FIENDJUMP;
+				if(rng == 1)
+					fstep = SND_FIENDJUMP;
+				else
+					fstep = SND_FIENDJUMP;
+
+				mcp_Sound(self, CHAN_VOICE, fstep, 1, ATTN_NORM);
+				self.lastfootstep = time + FOOTSTEPSOUNDINTERVAL;
+			}
+		}
+	}
 };
 
 void() mcpfiend_PainSound =

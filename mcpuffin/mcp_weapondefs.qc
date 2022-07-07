@@ -97,7 +97,7 @@ mcpweaptype MCPWEAPDICT[16] =
 		1,			//clipsize
 		IT_NAILS,		//hudammoicon
 		SND_SHOOTRAILGUN,	//shootsound
-		1.5,			//fullreloadtime
+		1,			//fullreloadtime
 		SND_RELOADRAILGUN,	//reloadsound
 		SND_RELOADRAILGUN	//reloadendsound
 	}
