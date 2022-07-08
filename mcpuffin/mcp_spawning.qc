@@ -672,6 +672,8 @@ void mcp_ExecTeamConfig(entity e) =
 			stuffcmd(e, "exec teamred.cfg\n");
 		if(e.team_no == MCPTEAM_NONE)
 			stuffcmd(e, "exec teamnone.cfg\n");
+		if(mcpmode == MCPMODE_COINSFFA)
+			stuffcmd(e, "exec teamffa.cfg\n");
 	}
 };
 

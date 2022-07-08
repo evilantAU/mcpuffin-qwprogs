@@ -50,6 +50,7 @@ void mcp_CreateAliasBatch(entity e, float i) =			//doing it in batches because s
 		mcp_CreateAlias(e,"arsonist"		, 	MCPIMPULSE_GOARSONIST);
 		mcp_CreateAlias(e,"technician"		, 	MCPIMPULSE_GOTECHNICIAN);
 		mcp_CreateAlias(e,"randomclass"		, 	MCPIMPULSE_GORANDOM);
+		mcp_CreateAlias(e,"randompc"		, 	MCPIMPULSE_GORANDOM);
 		
 	}
 	if(i == 2)
